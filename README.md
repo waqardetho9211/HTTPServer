@@ -2,7 +2,7 @@
 A simple HTTP web server. 
 
 ## How To Run
-The app is made using Java and tested using JDK 1.8. One can form a war file using this source code by using any build tool. In order to make a connection with the Mongo database one needs to make changes in the application.properties in resource package and provide the password of the Mongo DB At the right place.
+The app is made using Java and tested using JDK 1.8. 
 
 ## Architecture
 
