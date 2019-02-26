@@ -1,4 +1,4 @@
-package com.main.java;
+package main.java;
 
 import com.sun.net.httpserver.HttpServer;
 
@@ -15,9 +15,6 @@ public class NewHTTPServer {
 			server = HttpServer.create(new InetSocketAddress(port), 0);
 			System.out.println("server started at " + port);
 			server.createContext("/", new Handlers.RootHandler());
-			server.createContext("/echoHeader", new Handlers.EchoHeaderHandler());
-			server.createContext("/echoGet", new Handlers.EchoGetHandler());
-			server.createContext("/echoPost", new Handlers.EchoPostHandler());
 			server.setExecutor(null);
 			server.start();
 		} catch (IOException e) {
