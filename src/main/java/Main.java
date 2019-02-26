@@ -5,6 +5,5 @@ public class Main {
 	public static int port = 8989;
 	public static void main(String[] args) {
 		NewHTTPServer httpServer = new NewHTTPServer();
-		httpServer.Start(port);
 	}
 }
