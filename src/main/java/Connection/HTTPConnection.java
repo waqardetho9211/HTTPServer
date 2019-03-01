@@ -26,22 +26,26 @@ public class HTTPConnection {
     @Getter
     @Setter
     private HTTPHeaders headers;
+    @Getter
+    @Setter
+    private String connectionPath;
 
     private HTTPConnection(ComputerBuilder builder) {
         this.request = builder.request;
         this.response = builder.response;
         this.headers = builder.headers;
+        this.connectionPath = builder.connectionPath;
     }
 
-    //HTTPConnectionBuilder Class
     public static class ComputerBuilder {
-
-        // // Including these fields into required fields as every HTTP connection has at lease requests and responses.
+        // required parameters
+        // Including these fields into required fields as every HTTP connection has at lease requests and responses.
         private HTTPRequest request;
         private HTTPResponse response;
 
         // optional parameters
         private HTTPHeaders headers;
+        private String connectionPath;
 
         public ComputerBuilder() {
             this.request = new HTTPRequest();
@@ -50,6 +54,11 @@ public class HTTPConnection {
 
         public ComputerBuilder withHTTPHeaders() {
             this.headers = new HTTPHeaders();
+            return this;
+        }
+
+        public ComputerBuilder withPath(String connectionPath){
+            this.connectionPath = connectionPath;
             return this;
         }
 
