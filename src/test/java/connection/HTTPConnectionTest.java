@@ -1,10 +1,8 @@
-package test.java;
+package test.java.connection;
 
-import main.java.NewHTTPServer;
-import main.java.Path;
+import main.java.connection.HTTPConnection;
 import org.glassfish.jersey.client.ClientConfig;
 import org.junit.Test;
-import org.reflections.Reflections;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -15,15 +13,26 @@ import java.net.URI;
 
 import static org.junit.Assert.assertEquals;
 
+public class HTTPConnectionTest {
+    @Test
+    public void testServer() {
+        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withPath("/").build();
+        // Using Jersey Libraries to test the connection
+        final ClientConfig config = new ClientConfig();
+        final Client client = ClientBuilder.newClient(config);
+        final WebTarget target = client.target(getBaseURI());
 
-public class TestPathForRequests {
-    public static int port = 8989;
-    private static final String path = "testPath";
+        final Response response = target.request().get(Response.class);
 
-    @Path(value = path)
+        assertEquals(response.getStatus(), 200);
+
+        connection.Stop();
+    }
+
     @Test
     public void checkIfPathIsCorrect() {
-        NewHTTPServer httpServer = new NewHTTPServer();
+        String path = "/root";
+        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().withPath(path).build();
 
         // Using Jersey Libraries to test the connection.
         final ClientConfig config = new ClientConfig();
@@ -33,10 +42,12 @@ public class TestPathForRequests {
         final Response response = target.path(path).request().get(Response.class);
 
         assertEquals(response.getStatus(), 200);
-        httpServer.Stop();
+
+        connection.Stop();
     }
 
     private static URI getBaseURI() {
         return UriBuilder.fromUri("http://localhost:8989").build();
     }
+
 }
