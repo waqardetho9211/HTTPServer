@@ -75,7 +75,7 @@ public class HTTPConnection {
             return this;
         }
 
-        public HTTPConnectionBuilder withPath(String connectionPath){
+        public HTTPConnectionBuilder withPath(String connectionPath) {
             this.connectionPath = connectionPath;
             server.createContext(connectionPath, this.response);
             return this;
@@ -86,7 +86,6 @@ public class HTTPConnection {
             server.start();
             return new HTTPConnection(this);
         }
-
     }
 
     public void Stop() {
