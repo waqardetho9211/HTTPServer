@@ -1,11 +1,9 @@
 package main.java.connection;
 
 
-import com.sun.net.httpserver.HttpServer;
 import lombok.Getter;
 import lombok.Setter;
 import main.java.Request.HTTPRequest;
-import main.java.Request.HTTPRequestFactory;
 import main.java.Request.HTTPRequestType;
 import main.java.Response.HTTPResponse;
 import main.java.header.HTTPHeaders;
@@ -70,11 +68,11 @@ public class HTTPConnection {
 
         public HTTPConnectionBuilder withPath(String connectionPath) {
             this.connectionPath = connectionPath;
-
             return this;
         }
+
         public HTTPConnectionBuilder withRequesttype(HTTPRequestType type) {
-            this.httpRequestType = httpRequestType;
+            this.httpRequestType = type;
             return this;
         }
 
