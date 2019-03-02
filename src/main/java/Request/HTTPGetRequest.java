@@ -5,7 +5,6 @@ import com.sun.net.httpserver.HttpHandler;
 import main.java.Response.HTTPResponse;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -15,33 +14,33 @@ import java.util.List;
 import java.util.Map;
 
 public class HTTPGetRequest implements HttpHandler {
-    HTTPResponse response;
-    public HTTPGetRequest(HTTPResponse response) {
+    private HTTPResponse response;
+    HTTPGetRequest(HTTPResponse response) {
         this.response = response;
     }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        Map<String, Object> parameters = new HashMap<String, Object>();
+        Map<String, Object> parameters = new HashMap<>();
         URI requestedUri = httpExchange.getRequestURI();
         String query = requestedUri.getRawQuery();
         parseQuery(query, parameters);
         // send response
-        String response = "";
+        StringBuilder response = new StringBuilder();
         for (String key : parameters.keySet())
-            response += key + " = " + parameters.get(key) + "\n";
+            response.append(key).append(" = ").append(parameters.get(key)).append("\n");
 
-        this.response.setResponseString(response);
-        HTTPBaseRequest.writeOutputStream(httpExchange, response);
+        this.response.setResponseString(response.toString());
+        HTTPBaseRequest.writeOutputStream(httpExchange, response.toString());
     }
 
-    public static void parseQuery(String query, Map<String, Object> parameters) throws UnsupportedEncodingException {
+    private static void parseQuery(String query, Map<String, Object> parameters) throws UnsupportedEncodingException {
 
         if (query != null) {
-            String pairs[] = query.split("[&]");
+            String[] pairs = query.split("[&]");
 
             for (String pair : pairs) {
-                String param[] = pair.split("[=]");
+                String[] param = pair.split("[=]");
 
                 String key = null;
                 String value = null;
@@ -59,7 +58,7 @@ public class HTTPGetRequest implements HttpHandler {
                         List<String> values = (List<String>) obj;
                         values.add(value);
                     } else if (obj instanceof String) {
-                        List<String> values = new ArrayList<String>();
+                        List<String> values = new ArrayList<>();
                         values.add((String) obj);
                         values.add(value);
                         parameters.put(key, values);
