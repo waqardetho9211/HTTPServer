@@ -1,9 +1,10 @@
 package main.java;
 
+import main.java.Request.HTTPRequestType;
 import main.java.connection.HTTPConnection;
 
 /**
- * A simple class to test the entire application
+ * A simple class to test the application
  */
 
 public class Main {
@@ -11,12 +12,10 @@ public class Main {
     public static int port = 8989;
 
     public static void main(String[] args) {
-        //NewHTTPServer httpServer = new NewHTTPServer();
-
-        //HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().build();
-
-        HTTPConnection connection2 = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().withPath("/root").build();
-
-        System.out.println(connection2);
+        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().withPath("/").build();
+        HTTPConnection connection2 = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().withPath("/root")
+                .build();
+        HTTPConnection connection3 = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders()
+                .withPath("/getRequest").withRequesttype(HTTPRequestType.GET).build();
     }
 }
