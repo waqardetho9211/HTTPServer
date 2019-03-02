@@ -5,11 +5,10 @@ import com.sun.net.httpserver.HttpServer;
 import lombok.Getter;
 import lombok.Setter;
 import main.java.Request.HTTPRequest;
+import main.java.Request.HTTPRequestFactory;
+import main.java.Request.HTTPRequestType;
 import main.java.Response.HTTPResponse;
 import main.java.header.HTTPHeaders;
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
 
 /**
  * Base class for creating HTTP connections.
@@ -20,9 +19,6 @@ import java.net.InetSocketAddress;
  */
 
 public class HTTPConnection {
-    // Using HttpServer JDK Library
-    private int port = 8989;
-    private HttpServer server;
 
     //required parameters
     @Getter
@@ -39,18 +35,20 @@ public class HTTPConnection {
     @Getter
     @Setter
     private String connectionPath;
+    @Getter
+    @Setter
+    private HTTPRequestType httpRequestType;
+
 
     private HTTPConnection(HTTPConnectionBuilder builder) {
         this.request = builder.request;
         this.response = builder.response;
         this.headers = builder.headers;
         this.connectionPath = builder.connectionPath;
-        this.server = builder.server;
+        this.httpRequestType = builder.httpRequestType;
     }
 
     public static class HTTPConnectionBuilder {
-        private HttpServer server;
-        private int port = 8989;
         // required parameters
         // Including these fields into required fields as every HTTP connection has at lease requests and responses.
         private HTTPRequest request;
@@ -59,14 +57,9 @@ public class HTTPConnection {
         // optional parameters
         private HTTPHeaders headers;
         private String connectionPath;
+        private HTTPRequestType httpRequestType;
 
         public HTTPConnectionBuilder() {
-            try {
-                server = HttpServer.create(new InetSocketAddress(port), 0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            this.request = new HTTPRequest();
             this.response = new HTTPResponse();
         }
 
@@ -77,19 +70,23 @@ public class HTTPConnection {
 
         public HTTPConnectionBuilder withPath(String connectionPath) {
             this.connectionPath = connectionPath;
-            server.createContext(connectionPath, this.response);
+
+            return this;
+        }
+        public HTTPConnectionBuilder withRequesttype(HTTPRequestType type) {
+            this.httpRequestType = httpRequestType;
             return this;
         }
 
         public HTTPConnection build() {
-            server.setExecutor(null);
-            server.start();
+            this.request = new HTTPRequest();
+            this.request.setupRequest(this.connectionPath, this.httpRequestType, this.response);
             return new HTTPConnection(this);
         }
     }
 
     public void Stop() {
-        server.stop(0);
+        this.request.server.stop(0);
         System.out.println("server stopped");
     }
 
