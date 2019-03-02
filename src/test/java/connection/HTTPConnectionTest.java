@@ -1,5 +1,6 @@
 package test.java.connection;
 
+import main.java.Request.HTTPRequestType;
 import main.java.connection.HTTPConnection;
 import org.glassfish.jersey.client.ClientConfig;
 import org.junit.Test;
@@ -17,11 +18,8 @@ public class HTTPConnectionTest {
     @Test
     public void testServer() {
         HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withPath("/").build();
-        // Using Jersey Libraries to test the connection
-        final ClientConfig config = new ClientConfig();
-        final Client client = ClientBuilder.newClient(config);
-        final WebTarget target = client.target(getBaseURI());
 
+        WebTarget target = getWebTarget();
         final Response response = target.request().get(Response.class);
 
         assertEquals(response.getStatus(), 200);
@@ -34,16 +32,37 @@ public class HTTPConnectionTest {
         String path = "/root";
         HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().withPath(path).build();
 
-        // Using Jersey Libraries to test the connection.
-        final ClientConfig config = new ClientConfig();
-        final Client client = ClientBuilder.newClient(config);
-        final WebTarget target = client.target(getBaseURI());
+        WebTarget target = getWebTarget();
 
         final Response response = target.path(path).request().get(Response.class);
 
         assertEquals(response.getStatus(), 200);
 
         connection.Stop();
+    }
+
+    @Test
+    public void checkGetRequest() {
+        String path = "/getRequest";
+        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders()
+                .withPath(path).withRequesttype(HTTPRequestType.GET).build();
+
+        WebTarget target = getWebTarget();
+
+        final Response response = target.path(path).queryParam("test", "test").request()
+                .get(Response.class);
+
+        assertEquals(response.getStatus(), 200);
+        assertEquals("","");
+
+        connection.Stop();
+    }
+
+    private WebTarget getWebTarget() {
+        // Using Jersey Libraries to test the connection.
+        final ClientConfig config = new ClientConfig();
+        final Client client = ClientBuilder.newClient(config);
+        return client.target(getBaseURI());
     }
 
     private static URI getBaseURI() {
