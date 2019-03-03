@@ -1,16 +1,17 @@
-package main.java.Request;
+package main.java.connection;
 
 import com.sun.net.httpserver.HttpServer;
-import lombok.Getter;
-import lombok.Setter;
+import main.java.Request.HTTPBaseRequest;
+import main.java.Request.HTTPGetRequest;
+import main.java.Request.HTTPRequestType;
 import main.java.Response.HTTPResponse;
 
 /**
  * Class to parse HTTP requests.
  */
-public class HTTPRequestFactory {
+class HTTPConnectionFactory {
 
-    public HttpServer getRequest(HttpServer server, HTTPRequestType type, HTTPResponse response, String connectionPath){
+    HttpServer getRequest(HttpServer server, HTTPRequestType type, HTTPResponse response, String connectionPath){
         if(type == null){
             server.createContext(connectionPath, new HTTPBaseRequest(response));
             return server;

@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class HTTPGetRequest implements HttpHandler {
     private HTTPResponse response;
-    HTTPGetRequest(HTTPResponse response) {
+    public HTTPGetRequest(HTTPResponse response) {
         this.response = response;
     }
 
