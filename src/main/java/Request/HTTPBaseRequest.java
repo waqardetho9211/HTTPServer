@@ -9,7 +9,7 @@ import java.io.OutputStream;
 
 public class HTTPBaseRequest implements HttpHandler {
 
-    HTTPResponse response;
+    private HTTPResponse response;
 
     public HTTPBaseRequest(HTTPResponse response) {
         this.response = response;
@@ -18,9 +18,8 @@ public class HTTPBaseRequest implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "this is a basic http response";
-        this.response.setResponseString(response);
+        this.response.responseString = response;
         writeOutputStream(httpExchange, response);
-        return;
     }
 
     static void writeOutputStream(HttpExchange httpExchange, String response) throws IOException {

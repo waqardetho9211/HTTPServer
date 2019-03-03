@@ -17,5 +17,7 @@ public class Main {
                 .build();
         HTTPConnection connection3 = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders()
                 .withPath("/getRequest").withRequesttype(HTTPRequestType.GET).build();
+        HTTPConnection connection4 = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders()
+                .withPath("/getWithETAG").withRequesttype(HTTPRequestType.GET).withETAG("Sample ETAG").build();
     }
 }
