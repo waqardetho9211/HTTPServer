@@ -7,7 +7,7 @@ The app is made using Java and tested using JDK 1.8. Create a jar file from the 
 ## Architecture
 HTTPConnection (a builder class) is the main entry point in pursuit of creating HTTP connections or HTTP servers. It uses further subclasses (such as HTTPRequest, HTTPResponse etc.) in order to create a web-server based on the provided parameters. The big picture of the app can be described through the following picture:
 
-![alt text](https://drive.google.com/file/d/0B4PWA8ZqWzFzcUZhZG0yU1FfZm8/view?usp=sharing)
+![Alt text](static/linked.jpg?raw=true "Arch")
 
 ## Database
 No Databases has been used
