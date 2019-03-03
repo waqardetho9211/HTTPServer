@@ -3,6 +3,7 @@ package main.java.Request;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import main.java.Response.HTTPResponse;
+import main.java.header.HTTPHeaders;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -14,8 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 public class HTTPGetRequest implements HttpHandler {
+    private final HTTPHeaders headers;
     private HTTPResponse response;
-    public HTTPGetRequest(HTTPResponse response) {
+    public HTTPGetRequest(HTTPResponse response, HTTPHeaders headers) {
+        this.headers = headers;
         this.response = response;
     }
 
@@ -30,10 +33,11 @@ public class HTTPGetRequest implements HttpHandler {
         for (String key : parameters.keySet())
             response.append(key).append(" = ").append(parameters.get(key)).append("\n");
 
-        this.response.setResponseString(response.toString());
+        this.response.responseString = response.toString();
         HTTPBaseRequest.writeOutputStream(httpExchange, response.toString());
     }
 
+    // Method copied from the internet
     private static void parseQuery(String query, Map<String, Object> parameters) throws UnsupportedEncodingException {
 
         if (query != null) {

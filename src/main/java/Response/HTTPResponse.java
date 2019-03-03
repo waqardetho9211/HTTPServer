@@ -6,9 +6,6 @@ import lombok.Setter;
 public class HTTPResponse {
     @Getter
     @Setter
-    private String responseString;
+    public String responseString;
 
-    public void setResponseString(String response) {
-        this.responseString = response;
-    }
 }

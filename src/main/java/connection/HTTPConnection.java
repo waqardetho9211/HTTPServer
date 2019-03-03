@@ -46,6 +46,8 @@ public class HTTPConnection {
     }
 
     public static class HTTPConnectionBuilder {
+        private HTTPBaseConnection connection;
+
         // required parameters
         // Including these fields into required fields as every HTTP connection has at lease requests and responses.
         private HTTPRequest request;
@@ -53,7 +55,6 @@ public class HTTPConnection {
 
         // optional parameters
         private HTTPHeaders headers;
-        private HTTPBaseConnection connection;
 
         public HTTPConnectionBuilder() {
             this.request = new HTTPRequest();
@@ -77,7 +78,7 @@ public class HTTPConnection {
 
         public HTTPConnection build() {
             this.connection = new HTTPBaseConnection();
-            this.connection.setupRequest(this.request.connectionPath, this.request.httpRequestType, this.response);
+            this.connection.setupRequest(this.request, this.response, this.headers);
             return new HTTPConnection(this);
         }
 

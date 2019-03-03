@@ -3,27 +3,29 @@ package main.java.connection;
 import com.sun.net.httpserver.HttpServer;
 import main.java.Request.HTTPBaseRequest;
 import main.java.Request.HTTPGetRequest;
+import main.java.Request.HTTPRequest;
 import main.java.Request.HTTPRequestType;
 import main.java.Response.HTTPResponse;
+import main.java.header.HTTPHeaders;
 
 /**
  * Class to parse HTTP requests.
  */
 class HTTPConnectionFactory {
 
-    HttpServer getRequest(HttpServer server, HTTPRequestType type, HTTPResponse response, String connectionPath){
-        if(type == null){
-            server.createContext(connectionPath, new HTTPBaseRequest(response));
+    HttpServer getRequest(HttpServer server, HTTPRequest request, HTTPResponse response, HTTPHeaders headers){
+        if(request.httpRequestType == null){
+            server.createContext(request.connectionPath, new HTTPBaseRequest(response));
             return server;
         }
-        if(type.equals(HTTPRequestType.GET)){
-            server.createContext(connectionPath, new HTTPGetRequest(response));
+        if(request.httpRequestType.equals(HTTPRequestType.GET)){
+            server.createContext(request.connectionPath, new HTTPGetRequest(response, headers));
             return server;
 
-        } else if(type.equals(HTTPRequestType.HEADER)){
+        } else if(request.httpRequestType.equals(HTTPRequestType.HEADER)){
             return null;
 
-        } else if(type.equals(HTTPRequestType.POST)){
+        } else if(request.httpRequestType.equals(HTTPRequestType.POST)){
             return null;
         }
 
