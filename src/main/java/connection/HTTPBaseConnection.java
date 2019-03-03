@@ -2,7 +2,6 @@ package main.java.connection;
 
 import com.sun.net.httpserver.HttpServer;
 import main.java.Request.HTTPRequest;
-import main.java.Request.HTTPRequestType;
 import main.java.Response.HTTPResponse;
 import main.java.header.HTTPHeaders;
 
@@ -22,7 +21,7 @@ class HTTPBaseConnection {
             System.err.println("Unable to create HTTP Connection");
         }
         HTTPConnectionFactory httpConnectionFactory = new HTTPConnectionFactory();
-        server = httpConnectionFactory.getRequest(this.server, request, response, headers);
+        server = httpConnectionFactory.getRequest(server, request, response, headers);
         server.setExecutor(null);
         server.start();
         return this;

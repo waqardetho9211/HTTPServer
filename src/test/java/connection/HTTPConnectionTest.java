@@ -30,7 +30,7 @@ public class HTTPConnectionTest {
     @Test
     public void checkIfPathIsCorrect() {
         String path = "/root";
-        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().withPath(path).build();
+        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders(true).withPath(path).build();
 
         WebTarget target = getWebTarget();
 
@@ -44,7 +44,7 @@ public class HTTPConnectionTest {
     @Test
     public void checkGetRequest() {
         String path = "/getRequest";
-        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders()
+        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders(true)
                 .withPath(path).withRequesttype(HTTPRequestType.GET).build();
 
         WebTarget target = getWebTarget();

@@ -61,7 +61,7 @@ public class HTTPConnection {
             this.response = new HTTPResponse();
         }
 
-        public HTTPConnectionBuilder withHTTPHeaders() {
+        public HTTPConnectionBuilder withHTTPHeaders(boolean headers) {
             this.headers = new HTTPHeaders();
             return this;
         }
