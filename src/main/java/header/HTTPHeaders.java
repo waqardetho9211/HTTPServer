@@ -10,6 +10,15 @@ public class HTTPHeaders {
     @Getter
     @Setter
     public boolean headers;
+    @Getter
+    @Setter
+    public String IfMatch;
+    @Getter
+    @Setter
+    public String IfNoneMatch;
+    @Getter
+    @Setter
+    public String IfModifiedSince;
 
 
     public HTTPHeaders() {

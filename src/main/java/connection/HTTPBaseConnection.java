@@ -12,9 +12,10 @@ class HTTPBaseConnection {
     HttpServer server;
     private int port = 8989;
 
-    HTTPBaseConnection() {}
+    HTTPBaseConnection() {
+    }
 
-    HTTPBaseConnection setupRequest(HTTPRequest request, HTTPResponse response, HTTPHeaders headers){
+    HTTPBaseConnection setupRequest(HTTPRequest request, HTTPResponse response, HTTPHeaders headers) {
         try {
             server = HttpServer.create(new InetSocketAddress(port), 0);
         } catch (IOException e) {

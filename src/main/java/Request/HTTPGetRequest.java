@@ -6,6 +6,7 @@ import main.java.Response.HTTPResponse;
 import main.java.header.BaseHeaders;
 import main.java.header.CacheHeaders;
 import main.java.header.HTTPHeaders;
+import main.java.header.HeaderTypes;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class HTTPGetRequest implements HttpHandler {
     private final HTTPHeaders headers;
     private HTTPResponse response;
+
     public HTTPGetRequest(HTTPResponse response, HTTPHeaders headers) {
         this.headers = headers;
         this.response = response;
@@ -35,13 +37,25 @@ public class HTTPGetRequest implements HttpHandler {
         for (String key : parameters.keySet())
             response.append(key).append(" = ").append(parameters.get(key)).append("\n");
 
-        if(this.headers.headers){
+        if (this.headers.headers) {
             response = new StringBuilder(BaseHeaders.attachBaseHeadersInResponse(httpExchange, response.toString()));
             BaseHeaders.attachBaseHeadersInHeaders(httpExchange, headers);
         }
-        if(this.headers.ETAG != null){
+        if (this.headers.ETAG != null) {
             response = new StringBuilder(CacheHeaders.attachETAGHeader(response.toString(), headers));
             CacheHeaders.attachETAGHeadersInHeaders(httpExchange, headers);
+        }
+        if (this.headers.IfMatch != null) {
+            // Todo implement
+            System.out.println("The functionality is not yet implemented: "+ HeaderTypes.IF_MATCH);
+        }
+        if (this.headers.IfNoneMatch != null) {
+            // Todo implement
+            System.out.println("The functionality is not yet implemented: "+ HeaderTypes.IF_NONE_MATCH);
+        }
+        if (this.headers.IfModifiedSince != null) {
+            // Todo implement
+            System.out.println("The functionality is not yet implemented: "+ HeaderTypes.IF_MODIFIED_SINCE);
         }
         this.response.responseString = response.toString();
         HTTPBaseRequest.writeOutputStream(httpExchange, response.toString());

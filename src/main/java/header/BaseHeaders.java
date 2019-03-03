@@ -3,7 +3,6 @@ package main.java.header;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
-import java.io.IOException;
 import java.util.*;
 
 public class BaseHeaders {

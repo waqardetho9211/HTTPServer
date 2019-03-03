@@ -13,19 +13,21 @@ import main.java.header.HTTPHeaders;
  */
 class HTTPConnectionFactory {
 
-    HttpServer getRequest(HttpServer server, HTTPRequest request, HTTPResponse response, HTTPHeaders headers){
-        if(request.httpRequestType == null){
+    HttpServer getRequest(HttpServer server, HTTPRequest request, HTTPResponse response, HTTPHeaders headers) {
+        if (request.httpRequestType == null) {
             server.createContext(request.connectionPath, new HTTPBaseRequest(response));
             return server;
         }
-        if(request.httpRequestType.equals(HTTPRequestType.GET)){
+        if (request.httpRequestType.equals(HTTPRequestType.GET)) {
             server.createContext(request.connectionPath, new HTTPGetRequest(response, headers));
             return server;
 
-        } else if(request.httpRequestType.equals(HTTPRequestType.HEADER)){
+        } else if (request.httpRequestType.equals(HTTPRequestType.HEADER)) {
+            // Tod Implement
             return null;
 
-        } else if(request.httpRequestType.equals(HTTPRequestType.POST)){
+        } else if (request.httpRequestType.equals(HTTPRequestType.POST)) {
+            // Tod Implement
             return null;
         }
 

@@ -9,8 +9,8 @@ import main.java.connection.HTTPConnection;
 
 public class Main {
     public static void main(String[] args) {
-//        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().withPath("/").build();
-//        HTTPConnection connection2 = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders().withPath("/root")
+//        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders(true).withPath("/").build();
+//        HTTPConnection connection2 = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders(true).withPath("/root")
 //                .build();
 //        HTTPConnection connection3 = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders(true)
 //                .withPath("/getRequest").withRequesttype(HTTPRequestType.GET).build();

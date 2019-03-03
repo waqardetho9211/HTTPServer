@@ -10,6 +10,8 @@ public class HTTPRequest {
     @Getter
     @Setter
     public HTTPRequestType httpRequestType;
-    public HTTPRequest() {}
+
+    public HTTPRequest() {
+    }
 
 }

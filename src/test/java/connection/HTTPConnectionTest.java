@@ -54,7 +54,7 @@ public class HTTPConnectionTest {
                 .get(Response.class);
 
         assertEquals(response.getStatus(), 200);
-        assertEquals("","");
+        assertEquals("", "");
 
         connection.Stop();
     }
