@@ -6,7 +6,6 @@ import main.java.Response.HTTPResponse;
 import main.java.header.BaseHeaders;
 import main.java.header.CacheHeaders;
 import main.java.header.HTTPHeaders;
-import main.java.header.HeaderTypes;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -37,10 +36,12 @@ public class HTTPGetRequest implements HttpHandler {
             response.append(key).append(" = ").append(parameters.get(key)).append("\n");
 
         if(this.headers.headers){
-            response = new StringBuilder(BaseHeaders.attachBaseHeaders(httpExchange, response.toString()));
+            response = new StringBuilder(BaseHeaders.attachBaseHeadersInResponse(httpExchange, response.toString()));
+            BaseHeaders.attachBaseHeadersInHeaders(httpExchange, headers);
         }
         if(this.headers.ETAG != null){
             response = new StringBuilder(CacheHeaders.attachETAGHeader(response.toString(), headers));
+            CacheHeaders.attachETAGHeadersInHeaders(httpExchange, headers);
         }
         this.response.responseString = response.toString();
         HTTPBaseRequest.writeOutputStream(httpExchange, response.toString());

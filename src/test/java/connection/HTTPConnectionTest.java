@@ -13,6 +13,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class HTTPConnectionTest {
     @Test
@@ -55,6 +56,25 @@ public class HTTPConnectionTest {
         assertEquals(response.getStatus(), 200);
         assertEquals("","");
 
+        connection.Stop();
+    }
+
+    @Test
+    public void ShouldReturnETAGInResponse() {
+
+        String path = "/getRequest";
+        HTTPConnection connection = new HTTPConnection.HTTPConnectionBuilder().withHTTPHeaders(true)
+                .withPath(path).withRequesttype(HTTPRequestType.GET).withETAG("Sample ETAG").build();
+
+        WebTarget target = getWebTarget();
+
+        final Response response = target.path(path).queryParam("test", "test").request()
+                .get(Response.class);
+
+        final String eTag = response.getHeaderString("ETag");
+
+        assertEquals(response.getStatus(), 200);
+        assertNotNull(eTag);
         connection.Stop();
     }
 

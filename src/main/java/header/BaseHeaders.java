@@ -4,14 +4,11 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BaseHeaders {
 
-    public static String attachBaseHeaders(HttpExchange httpExchange, String response) {
+    public static String attachBaseHeadersInResponse(HttpExchange httpExchange, String response) {
         Headers headers = httpExchange.getRequestHeaders();
         Set<Map.Entry<String, List<String>>> entries = headers.entrySet();
         StringBuilder responseBuilder = new StringBuilder(response);
@@ -20,5 +17,10 @@ public class BaseHeaders {
         response = responseBuilder.toString();
 
         return response;
+    }
+
+    public static void attachBaseHeadersInHeaders(HttpExchange httpExchange, HTTPHeaders headers) {
+        // Todo
+
     }
 }
