@@ -35,15 +35,14 @@ public class HTTPConnection {
     private String connectionPath;
     @Getter
     @Setter
-    private HTTPRequestType httpRequestType;
+    private HTTPBaseConnection connection;
 
 
     private HTTPConnection(HTTPConnectionBuilder builder) {
         this.request = builder.request;
         this.response = builder.response;
         this.headers = builder.headers;
-        this.connectionPath = builder.connectionPath;
-        this.httpRequestType = builder.httpRequestType;
+        this.connection = builder.connection;
     }
 
     public static class HTTPConnectionBuilder {
@@ -54,10 +53,10 @@ public class HTTPConnection {
 
         // optional parameters
         private HTTPHeaders headers;
-        private String connectionPath;
-        private HTTPRequestType httpRequestType;
+        private HTTPBaseConnection connection;
 
         public HTTPConnectionBuilder() {
+            this.request = new HTTPRequest();
             this.response = new HTTPResponse();
         }
 
@@ -67,24 +66,29 @@ public class HTTPConnection {
         }
 
         public HTTPConnectionBuilder withPath(String connectionPath) {
-            this.connectionPath = connectionPath;
+            this.request.connectionPath = connectionPath;
             return this;
         }
 
         public HTTPConnectionBuilder withRequesttype(HTTPRequestType type) {
-            this.httpRequestType = type;
+            this.request.httpRequestType = type;
             return this;
         }
 
         public HTTPConnection build() {
-            this.request = new HTTPRequest();
-            this.request.setupRequest(this.connectionPath, this.httpRequestType, this.response);
+            this.connection = new HTTPBaseConnection();
+            this.connection.setupRequest(this.request.connectionPath, this.request.httpRequestType, this.response);
             return new HTTPConnection(this);
+        }
+
+        public HTTPConnectionBuilder withETAG(String etag) {
+            this.headers.ETAG = etag;
+            return this;
         }
     }
 
     public void Stop() {
-        this.request.server.stop(0);
+        this.connection.server.stop(0);
         System.out.println("server stopped");
     }
 
